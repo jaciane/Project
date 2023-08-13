@@ -1,0 +1,3 @@
+{
+    "dotnet.defaultSolution": "Back/src/Project.API/Project.API.sln"
+}
