@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Project.API.Data;
 using Project.API.Models;
 
 namespace Project.API.Controllers;
@@ -7,42 +8,25 @@ namespace Project.API.Controllers;
 [Route("api/[controller]")]
 public class EventController : ControllerBase
 {
-   public IEnumerable<Event> _events = new Event[]{
-      new Event(){
-               EventId =1,
-               Theme="Angular com .Ney",
-               Local="Lauro de Freitas",
-               batch="lote 1",
-               QtdPeople = 100,
-               EventDate= DateTime.Now.AddDays(1).ToString(),
-               ImageURL = "photo.png"
-               },
-                  new Event(){
-               EventId =2,
-               Theme="Angular com .Ney 2",
-               Local="Salvador",
-               batch="lote 2",
-               QtdPeople = 1000,
-               EventDate= DateTime.Now.AddDays(10).ToString(),
-               ImageURL = "photo.png"
-               }
-       };
-    public EventController()
+    private readonly DataContext _dataContext;
+    public EventController(DataContext dataContext)
     {
+      _dataContext = dataContext;
         
     }
+    
 
     [HttpGet]
     public IEnumerable<Event> Get()
     {
-         return _events;
+         return _dataContext.Events;
          
     }
 
     [HttpGet("{id}")]
     public IEnumerable<Event> Get(int id)
     {
-         return _events.Where(e => e.EventId == id);
+         return _dataContext.Events.Where(e => e.EventId == id);
          
     }
 
